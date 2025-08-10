@@ -7,6 +7,6 @@ const userSchema = mongoose.Schema({
     credits:{type:Number, default: 5}
 })
 
-const UserModel = mongoose.Schema("User",userSchema)
+const UserModel = mongoose.model("User",userSchema)
 
 export default UserModel
