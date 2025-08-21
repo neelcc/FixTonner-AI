@@ -24,6 +24,8 @@ const  userRegister = async (req,res) => {
 
     try {
        
+        
+        
         const find_user = await UserModel.findOne({email})
         
         if(find_user){
@@ -42,8 +44,8 @@ const  userRegister = async (req,res) => {
         })
 
         const token = jwt.sign({ email: email, id: user._id },process.env.JWT_SECRET,{ expiresIn : "1d" })
-
-
+        
+        
         res.status(201).send({
             success : true,
             user,
@@ -59,24 +61,24 @@ const  userRegister = async (req,res) => {
 } 
 
 const userLogin = async (req,res) => {
-
+    
     const userSchema = z.object({
         email: z.string().email("Invalid email address"),
         password: z.string().min(6, "Password must be at least 6 characters long")
     })
     const parsed = userSchema.safeParse(req.body)
-
+    
     if (!parsed.success) {
         return res.status(404).send({
             success: false,
             errors: parsed.error.errors.map(err => err.message)
         })
     }
-
+    
     const { email , password } = parsed.data 
-
+    
     try {
-
+        
         const user = await UserModel.findOne({ email })
         if(!user){
             return res.status(409).send({
@@ -93,7 +95,8 @@ const userLogin = async (req,res) => {
                 message: "Password is incorrect!"
             })
         }
-
+        
+        
         const token = jwt.sign({ email: email, id: user._id },process.env.JWT_SECRET,{ expiresIn : "1d" })
 
         res.status(209).send({
