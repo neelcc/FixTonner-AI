@@ -15,7 +15,7 @@ const ToneTags = ({ emoji, label, idx }) => {
   };
 
   const isActive = activeTags.includes(label);
-
+  
   return (
     <button
       key={idx}

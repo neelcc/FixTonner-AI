@@ -1,8 +1,7 @@
-import { success } from "zod";
 import UserModel from "../model/userModel.js";
 import axios from "axios";
 
-const fixTone = async (req, res) => {
+const   fixTone = async (req, res) => {
   try {
     const userId = req.user.id;
     const { input_text, tone_tags } = req.body;
@@ -38,31 +37,42 @@ const fixTone = async (req, res) => {
     
     const data = await response.json();
     console.log(data);
-    res.json({ reply: data.choices[0].message.content });
+    if (!response.ok) {
+      let errorMessage = data.error?.message || "Something went wrong";
+
+      throw new Error(errorMessage);
+    }
+
+    await UserModel.updateOne(
+      { _id: user._id, credits: { $gt: 0 } }, 
+      { $inc: { credits: -1 } }
+    );  
+    res.json({
+      success : true ,
+      reply: data.choices[0].message.content ,
+      credits : user.credits,
+      user
+      });
 
     // console.log("Tone tags:", tone_tags);
-
-    
-    
   } catch (error) {
     res.send({
+      success:false,
       message : error.message
     })
   }
-};
+};  
 
 const loadCredits = async (req,res) => {
     try {
       const userId = req.user.id
       const user = await UserModel.findById(userId);
-
+      
+      
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
-
-      console.log(user);
       
-
      return res.send({
         success:true,
         credits : user.credits,

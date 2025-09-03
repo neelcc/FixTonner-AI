@@ -43,7 +43,7 @@ const  userRegister = async (req,res) => {
             password:hashedPassword
         })
 
-        const token = jwt.sign({ email: email, id: user._id },process.env.JWT_SECRET,{ expiresIn : "1d" })
+        const token = jwt.sign({ email: email, id: user._id },process.env.JWT_SECRET,{ expiresIn : 60*60 })
         
         
         res.status(201).send({
@@ -97,7 +97,7 @@ const userLogin = async (req,res) => {
         }
         
         
-        const token = jwt.sign({ email: email, id: user._id },process.env.JWT_SECRET,{ expiresIn : "1d" })
+        const token = jwt.sign({ email: email, id: user._id },process.env.JWT_SECRET,{ expiresIn : 60*60 })
 
         res.status(209).send({
             success:true,

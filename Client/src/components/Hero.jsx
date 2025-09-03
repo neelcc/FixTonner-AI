@@ -13,11 +13,11 @@ const Hero = () => {
     </div>
 
       <h1 className="text-4xl md:text-6xl font-light tracking-tight max-w-3xl leading-tight">
-      Transform Any Text Into the 
+      Transform Any Mssg Into the 
      <span className="font-normal"> Perfect Tone </span>
       </h1>
       <p className="mt-6 text-base md:text-lg font-light max-w-xl text-gray-300">
-      Type your message and instantly convert it to sound casual, polite, or just the way you want , cooked for every situation
+      Type your message and instantly convert it to sound casual, polite, or just the way you want , cook for every situation
       </p>
       <div className="mt-8">
         <button onClick={()=>{ navigate('/get-started')  }} className="px-6 py-3 text-sm font-light border border-white rounded-lg hover:bg-white hover:text-black transition">

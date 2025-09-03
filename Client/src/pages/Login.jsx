@@ -28,7 +28,8 @@ const AuthPage = () => {
         localStorage.setItem('token', data.token)
         console.log("Token in localStorage:", localStorage.getItem("token"));
         console.log(token);
-        
+        console.log(user);
+        console.log("sac",data.user);
       }
       console.log("Logging in with:", { email, password });
     } else {

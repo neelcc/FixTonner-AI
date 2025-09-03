@@ -12,7 +12,24 @@ const userAuth = async (req,res,next) => {
         if(!verifYToken){
              return res.status(401).json({ success: false, message: "No token provided"})
         }
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        
+        // const date = new Date();    
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET, 
+        //     function(err,decoded){
+        //     if (err) {
+        //         console.log(`${date.getHours()}:${date.getMinutes()}
+        //                                        :${date.getSeconds()}`);
+        //         console.log(err);
+        //     }
+        //     else {
+        //         console.log(`${date.getHours()}:${date.getMinutes()}
+        //                                        :${date.getSeconds()}`);
+        //         console.log("Token verifified successfully");
+        //     }
+        // }
+    );
         req.user = decoded;
         
         next()
