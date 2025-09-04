@@ -8,7 +8,10 @@ const ProjectSchema = mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref: "User",
         required : true }
-    },{timestamps : true , createdAt : created_at , updatedAt : updated_at})
+    }, {  timestamps: {
+        createdAt: 'created_at', 
+        updatedAt: 'updated_at' 
+      } } )
 
 const ProjectModel = mongoose.model("Project" , ProjectSchema)
 

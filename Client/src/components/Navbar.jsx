@@ -1,12 +1,12 @@
 // Navbar.jsx
 import React, { useContext, useState } from "react";
-import { Menu, X } from "lucide-react"; // hamburger + close icons
+import { Menu, X, History } from "lucide-react"; // hamburger + close icons
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user , setUser, logout } = useContext(AppContext)
+  const { user , setUser, logout, getHistory } = useContext(AppContext)
   const navigate = useNavigate()  
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -25,6 +25,7 @@ const Navbar = () => {
         <button onClick={()=>{  navigate('/login' ) }} className="hover:text-white transition">Login</button>
       </div> : 
       <div className="md:flex  items-center justify-center hidden  space-x-10 text-sm font-light text-gray-200">
+      <button onClick={getHistory} ><History/></button>
       <button className="hover:text-white transition">Pricing</button>
       <button onClick={logout} className="hover:text-white transition">Logout</button>
       <button className=" text-center relative flex items-center gap-2 px-4 py-1 rounded-full bg-fuchsia-900/40 text-white font-medium text-sm shadow-lg hover:opacity-90 transition">

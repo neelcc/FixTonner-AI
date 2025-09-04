@@ -1,13 +1,16 @@
+import ProjectModel from "../model/projectModel.js";
 import UserModel from "../model/userModel.js";
 import axios from "axios";
 
-const   fixTone = async (req, res) => {
+const fixTone = async (req, res) => {
   try {
     const userId = req.user.id;
     const { input_text, tone_tags } = req.body;
     const user = await UserModel.findById(userId);
+  
     console.log("Input text:", input_text);
     
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -42,19 +45,29 @@ const   fixTone = async (req, res) => {
 
       throw new Error(errorMessage);
     }
+    const UpdatedUser = await UserModel.findOneAndUpdate(
+     {_id: userId, credits : { $gt:0 }},
+     { $inc: { credits: -1 } },
+     { new : true }
+    );
+    
+    
+          await ProjectModel.create({
+            input_text : input_text,
+            output_text : "I LOVE YOU!",
+            tone_tags : tone_tags,
+            user : userId
+          })
 
-    await UserModel.updateOne(
-      { _id: user._id, credits: { $gt: 0 } }, 
-      { $inc: { credits: -1 } }
-    );  
-    res.json({
-      success : true ,
-      reply: data.choices[0].message.content ,
-      credits : user.credits,
-      user
-      });
+    return res.json({
+        success : true ,
+        reply: data.choices[0].message.content ,
+        credits : UpdatedUser.credits,
+        user : UpdatedUser
+        });
+      
 
-    // console.log("Tone tags:", tone_tags);
+
   } catch (error) {
     res.send({
       success:false,
@@ -87,8 +100,40 @@ const loadCredits = async (req,res) => {
     }
 }
 
+const getHistory = async (req,res) => {
+  try {
+    const userId = req.user.id
+    // const userId = req.body
+    const projects = await ProjectModel.find({user : userId})
+    console.log(projects);
+    
+    res.status(200).send({
+      success : true,
+      projects : projects
+    })
 
-export { fixTone ,  loadCredits } 
+
+  } catch (error) {
+    res.status(404).send({
+      message : error.message
+    })
+  }
+}
+
+
+const delHistory = async (req,res) => {
+   const userId = req.user.id
+}
+
+
+
+
+
+
+
+
+
+export { fixTone ,  loadCredits, getHistory, delHistory  } 
 
 
 

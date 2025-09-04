@@ -19,6 +19,22 @@ export  const AppContextProvider = ({children}) => {
     const BackendUrl = import.meta.env.VITE_BACKEND_URL
     const [ output_text , setOutput_text ] = useState("")
     const [ errorMessage , setErrorMessage ] = useState("")
+    const [ projectHistory , setProjectHistory ] = useState([])
+
+
+    const getHistory = async () => {
+        const { data } = await axios.get(BackendUrl+'project/history',
+            {
+                headers : {
+                    token : token
+                }
+            }
+        )
+        if(data.success){
+            setProjectHistory(data.projects)
+            navigate('/history')    
+        }
+    }
 
     const loadCreditsData = async () => {
         const { data } = await axios.get(BackendUrl+'project/load-credits',
@@ -106,7 +122,10 @@ export  const AppContextProvider = ({children}) => {
         output_text,
         setIsResultLoaded,
         errorMessage , 
-        setErrorMessage
+        setErrorMessage,
+        getHistory,
+        projectHistory,
+        setProjectHistory
     }
 
     return (
