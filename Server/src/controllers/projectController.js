@@ -54,7 +54,7 @@ const fixTone = async (req, res) => {
     
           await ProjectModel.create({
             input_text : input_text,
-            output_text : "I LOVE YOU!",
+            output_text : data.choices[0].message.content,
             tone_tags : tone_tags,
             user : userId
           })
