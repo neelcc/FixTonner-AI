@@ -2,13 +2,15 @@ import { motion } from "framer-motion"
 import { useContext, useState } from "react"
 import { AppContext } from "../context/AppContext"
 import { CircleX } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 export default function History() {
   const { projectHistory } = useContext(AppContext)
   const [selected, setSelected] = useState(null)
+  const navigate = useNavigate()
 
   return (
-    <div  className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
+    <div  className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden">
 
       {/* Background gradients */}
       <div
@@ -39,7 +41,11 @@ export default function History() {
       />
 
       {/* History Cards */}
-      <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6 p-6 w-full max-w-6xl">
+     { projectHistory && <div className=" relative z-10 mt-4 " > 
+      <h1 className=" text-3xl font-bold text-white ">History</h1>
+     </div> }
+     
+     { projectHistory ? <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6 p-6 w-full max-w-6xl">
         {projectHistory.map((item, idx) => (
           <motion.div
             key={idx}
@@ -75,8 +81,12 @@ export default function History() {
             </div>
           </motion.div>
         ))}
+      </div> :
+      <div className=" relative z-10 text-center" >
+        <h1 className=" text-white text-3xl font-semibold " >You have nothing to read!</h1>
+        <p className="  text-gray-100 " >Want to <span onClick={()=>{ navigate('/get-started') }} className=" text-blue-400 cursor-pointer " >Generate</span> more ? </p>
       </div>
-
+        }
       {/* Modal */}
       {selected && (
         <div  className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"> 
@@ -104,7 +114,7 @@ export default function History() {
             <p className="text-gray-300">{selected.tone_tags.join(", ")}</p>
           </motion.div>
         </div>
-      )}
+      )}    
     </div>
   )
 }
