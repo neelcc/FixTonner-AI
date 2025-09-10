@@ -1,6 +1,6 @@
-FixTonner-AI
+MessageAura
 
-FixTonner-AI helps you transform any message into the perfect tone. Whether you need your words to sound professional, friendly, casual, formal, humorous, or polite, this tool makes it easy with just one click.
+MessageAura helps you transform any message into the perfect tone. Whether you need your words to sound professional, friendly, casual, formal, humorous, or polite, this tool makes it easy with just one click.
 
 Tech Stack
 
